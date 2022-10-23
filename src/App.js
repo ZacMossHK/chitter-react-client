@@ -20,14 +20,18 @@ const App = () => {
     if (peeps.length) {
       return (
         <div>
-          <p>@{peeps[0].username}</p>
-          <p>{peeps[0].body}</p>
-          <p>Posted at {new Date(peeps[0].createdAt).toString()}</p>
-          <p>♡ {peeps[0].likes.length}</p>
+          {peeps.map((peep, idx) => {
+            return (
+              <div key={idx}>
+                <p>@{peep.username}</p>
+                <p>{peep.body}</p>
+                <p>Posted at {new Date(peep.createdAt).toString()}</p>
+                <p>♡ {peep.likes.length}</p>
+              </div>
+            );
+          })}
         </div>
       );
-    } else {
-      return <p>No peeps</p>;
     }
   };
   return (

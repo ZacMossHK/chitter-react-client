@@ -43,7 +43,7 @@ describe("App", () => {
     );
   });
 
-  it("renders a differnt peep", async () => {
+  it("renders a different peep", async () => {
     const peep = [
       {
         username: "bar",
@@ -63,5 +63,41 @@ describe("App", () => {
     [(username, body, createdAt, likes)].forEach((key) =>
       expect(key).toBeInTheDocument()
     );
+  });
+
+  it("renders several peeps", async () => {
+    const peeps = [
+      {
+        username: "foo",
+        body: "first peep",
+        createdAt: new Date(2022, 10, 23),
+        likes: ["id1, id2"],
+      },
+      {
+        username: "bar",
+        body: "second peep",
+        createdAt: new Date(2022, 10, 11),
+        likes: ["id1", "id2"],
+      },
+    ];
+    fetch.mockResponseOnce(JSON.stringify(peeps));
+    render(<App />);
+    await screen.findByText(/foo/);
+    expect(screen.getByText(/foo/)).toBeInTheDocument();
+    expect(screen.getByText(/first peep/)).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        "Posted at Wed Nov 23 2022 00:00:00 GMT+0000 (Greenwich Mean Time)"
+      )
+    ).toBeInTheDocument();
+    expect(screen.getByText(/♡ 1/)).toBeInTheDocument();
+    expect(screen.getByText(/bar/)).toBeInTheDocument();
+    expect(screen.getByText(/second peep/)).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        "Posted at Fri Nov 11 2022 00:00:00 GMT+0000 (Greenwich Mean Time)"
+      )
+    ).toBeInTheDocument();
+    expect(screen.getByText(/♡ 2/)).toBeInTheDocument();
   });
 });
