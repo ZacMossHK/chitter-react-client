@@ -46,4 +46,11 @@ describe("SignUpForm", () => {
     expect(fetch).toHaveBeenCalled();
     expect(mockSetUser).toHaveBeenCalledWith(user);
   });
+
+  it("sets the form visibility to false", async () => {
+    const mockSetSignUpFormVisible = jest.fn();
+    render(<SignUpForm setSignUpFormVisible={mockSetSignUpFormVisible} />);
+    await userEvent.click(screen.getByRole("button", { name: "back" }));
+    expect(mockSetSignUpFormVisible).toHaveBeenCalledWith(false);
+  });
 });

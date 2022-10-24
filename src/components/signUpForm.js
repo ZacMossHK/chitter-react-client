@@ -1,9 +1,13 @@
 import { useState } from "react";
 
-const SignUpForm = ({ setUser }) => {
+const SignUpForm = ({ setUser, setSignUpFormVisible }) => {
   const [usernameValue, setUsernameValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("");
   const [emailValue, setEmailValue] = useState("");
+
+  const handleBackButtonClick = () => {
+    setSignUpFormVisible(false);
+  };
 
   const handleSubmitButtonClick = async () => {
     const response = await fetch("");
@@ -34,7 +38,9 @@ const SignUpForm = ({ setUser }) => {
       <button name="submit" onClick={handleSubmitButtonClick}>
         submit
       </button>
-      <button name="back">back</button>
+      <button name="back" onClick={handleBackButtonClick}>
+        back
+      </button>
     </div>
   );
 };
