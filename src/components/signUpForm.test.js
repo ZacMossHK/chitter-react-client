@@ -30,4 +30,20 @@ describe("SignUpForm", () => {
     expect(fetch).toHaveBeenCalled();
     expect(mockSetUser).toHaveBeenCalledWith(user);
   });
+
+  it("sets the user as a different signed up user", async () => {
+    const mockSetUser = jest.fn();
+    const user = { _id: 1, username: "bar" };
+    fetch.mockResponseOnce(JSON.stringify(user));
+    render(<SignUpForm setUser={mockSetUser} />);
+    await userEvent.type(screen.getByPlaceholderText(/username/), "bar");
+    await userEvent.type(screen.getByPlaceholderText(/password/), "password");
+    await userEvent.type(
+      screen.getByPlaceholderText(/email/),
+      "email@email.com"
+    );
+    await userEvent.click(screen.getByRole("button", { name: "submit" }));
+    expect(fetch).toHaveBeenCalled();
+    expect(mockSetUser).toHaveBeenCalledWith(user);
+  });
 });
