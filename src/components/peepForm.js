@@ -1,7 +1,12 @@
-const PeepForm = ({ user, setUser }) => {
+const PeepForm = ({ user, setUser, peeps, setPeeps }) => {
   const handleLogOffButtonClick = async () => {
     const response = await fetch("");
     if (response.status === 204) setUser(null);
+  };
+  const handlePeepButtonClick = async () => {
+    const response = await fetch("");
+    const result = await response.json();
+    setPeeps([result, ...peeps]);
   };
   return (
     <div>
@@ -13,7 +18,9 @@ const PeepForm = ({ user, setUser }) => {
         defaultValue=""
         placeholder="Enter your peep here"
       />
-      <button name="peep">peep!</button>
+      <button name="peep" onClick={handlePeepButtonClick}>
+        peep!
+      </button>
       <button name="log-off" onClick={handleLogOffButtonClick}>
         log off
       </button>
