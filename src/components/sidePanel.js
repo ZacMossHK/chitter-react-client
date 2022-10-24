@@ -12,7 +12,7 @@ const SidePanel = () => {
   return (
     <div>
       <h1>Chitter</h1>
-      {renderPanel()}
+      {renderPanel}
     </div>
   );
 };
