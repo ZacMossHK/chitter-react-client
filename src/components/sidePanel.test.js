@@ -81,4 +81,21 @@ describe("SidePanel", () => {
     expect(screen.queryByText(/submit/)).toBeNull();
     expect(screen.getByText(/foo/)).toBeInTheDocument();
   });
+
+  it("renders LoginForm if user logs off", () => {
+    LoginForm.mockImplementationOnce(({ setUser }) => {
+      useEffect(() => {
+        setUser({ username: "foo" });
+      }, [setUser]);
+      return <p>Login</p>;
+    }).mockImplementationOnce(() => <p>Login</p>);
+    PeepForm.mockImplementationOnce(({ setUser }) => {
+      useEffect(() => {
+        setUser(null);
+      }, [setUser]);
+    });
+    render(<SidePanel />);
+    expect(screen.queryByText(/foo/)).toBeNull();
+    expect(screen.getByText(/Login/)).toBeInTheDocument();
+  });
 });
