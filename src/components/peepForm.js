@@ -1,6 +1,7 @@
-const PeepForm = () => {
+const PeepForm = ({ user }) => {
   return (
     <div>
+      <h2>@{user.username}</h2>
       <p>What would you like to Peep?</p>
       <input
         id="body-input"

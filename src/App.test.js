@@ -1,103 +1,24 @@
 import { render, screen } from "@testing-library/react";
 import App from "./App";
+import userEvent from "@testing-library/user-event";
 
 describe("App", () => {
   beforeEach(() => {
     fetch.resetMocks();
-    fetch.mockResponse(JSON.stringify([]));
   });
 
-  it("renders the Chitter Header", () => {
+  it("logs in a user", async () => {
+    fetch
+      .mockResponseOnce(JSON.stringify([]))
+      .mockResponseOnce(JSON.stringify({ _id: 1, username: "foo" }));
     render(<App />);
-    const text = screen.getByText(/Chitter/);
-    expect(text).toBeInTheDocument();
-  });
-
-  it("renders the login options", () => {
-    render(<App />);
-    expect(screen.getByPlaceholderText(/username/)).toBeInTheDocument();
-    expect(screen.getByPlaceholderText(/password/)).toBeInTheDocument();
-    expect(screen.getByText(/log in/)).toBeInTheDocument();
-    expect(screen.getByText(/sign up/)).toBeInTheDocument();
-  });
-
-  it("renders a peep", async () => {
-    const peep = [
-      {
-        username: "foo",
-        body: "first peep",
-        createdAt: new Date(2022, 10, 11),
-        likes: ["id1, id2"],
-      },
-    ];
-    fetch.mockResponseOnce(JSON.stringify(peep));
-    render(<App />);
-    const username = await screen.findByText(/@foo/);
-    const body = await screen.findByText(/first peep/);
-    const createdAt = await screen.findByText(
-      "Posted at Fri Nov 11 2022 00:00:00 GMT+0000 (Greenwich Mean Time)"
-    );
-    const likes = await screen.findByText(/♡ 1/);
-    [(username, body, createdAt, likes)].forEach((key) =>
-      expect(key).toBeInTheDocument()
-    );
-  });
-
-  it("renders a different peep", async () => {
-    const peep = [
-      {
-        username: "bar",
-        body: "second peep",
-        createdAt: new Date(2022, 10, 23),
-        likes: ["id1", "id2"],
-      },
-    ];
-    fetch.mockResponseOnce(JSON.stringify(peep));
-    render(<App />);
-    const username = await screen.findByText(/@bar/);
-    const body = await screen.findByText(/second peep/);
-    const createdAt = await screen.findByText(
-      "Posted at Wed Nov 23 2022 00:00:00 GMT+0000 (Greenwich Mean Time)"
-    );
-    const likes = await screen.findByText(/♡ 2/);
-    [(username, body, createdAt, likes)].forEach((key) =>
-      expect(key).toBeInTheDocument()
-    );
-  });
-
-  it("renders several peeps", async () => {
-    const peeps = [
-      {
-        username: "foo",
-        body: "first peep",
-        createdAt: new Date(2022, 10, 23),
-        likes: ["id1, id2"],
-      },
-      {
-        username: "bar",
-        body: "second peep",
-        createdAt: new Date(2022, 10, 11),
-        likes: ["id1", "id2"],
-      },
-    ];
-    fetch.mockResponseOnce(JSON.stringify(peeps));
-    render(<App />);
-    await screen.findByText(/foo/);
-    expect(screen.getByText(/foo/)).toBeInTheDocument();
-    expect(screen.getByText(/first peep/)).toBeInTheDocument();
+    await userEvent.type(screen.getByPlaceholderText(/username/), "foo");
+    await userEvent.type(screen.getByPlaceholderText(/password/), "password");
+    await userEvent.click(screen.getByRole("button", { name: "log in" }));
+    await screen.findByText(/@foo/);
+    expect(screen.getByText(/@foo/)).toBeInTheDocument();
     expect(
-      screen.getByText(
-        "Posted at Wed Nov 23 2022 00:00:00 GMT+0000 (Greenwich Mean Time)"
-      )
+      screen.getByText("What would you like to Peep?")
     ).toBeInTheDocument();
-    expect(screen.getByText(/♡ 1/)).toBeInTheDocument();
-    expect(screen.getByText(/bar/)).toBeInTheDocument();
-    expect(screen.getByText(/second peep/)).toBeInTheDocument();
-    expect(
-      screen.getByText(
-        "Posted at Fri Nov 11 2022 00:00:00 GMT+0000 (Greenwich Mean Time)"
-      )
-    ).toBeInTheDocument();
-    expect(screen.getByText(/♡ 2/)).toBeInTheDocument();
   });
 });

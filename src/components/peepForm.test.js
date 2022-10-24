@@ -3,7 +3,7 @@ import PeepForm from "./peepForm";
 
 describe("PeepForm", () => {
   it("renders the options", () => {
-    render(<PeepForm />);
+    render(<PeepForm user={{ _id: 1, username: "foo" }} />);
     expect(
       screen.getByPlaceholderText("Enter your peep here")
     ).toBeInTheDocument();
