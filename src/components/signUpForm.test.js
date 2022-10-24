@@ -16,10 +16,17 @@ describe("SignUpForm", () => {
     expect(screen.getByRole("button", { name: "back" })).toBeInTheDocument();
   });
   it("sets the user as the signed up user", async () => {
+    const mockSetSignUpFormVisible = jest.fn();
+
     const mockSetUser = jest.fn();
     const user = { _id: 1, username: "foo" };
     fetch.mockResponseOnce(JSON.stringify(user));
-    render(<SignUpForm setUser={mockSetUser} />);
+    render(
+      <SignUpForm
+        setUser={mockSetUser}
+        setSignUpFormVisible={mockSetSignUpFormVisible}
+      />
+    );
     await userEvent.type(screen.getByPlaceholderText(/username/), "foo");
     await userEvent.type(screen.getByPlaceholderText(/password/), "password");
     await userEvent.type(
@@ -29,13 +36,20 @@ describe("SignUpForm", () => {
     await userEvent.click(screen.getByRole("button", { name: "submit" }));
     expect(fetch).toHaveBeenCalled();
     expect(mockSetUser).toHaveBeenCalledWith(user);
+    expect(mockSetSignUpFormVisible).toHaveBeenCalledWith(false);
   });
 
   it("sets the user as a different signed up user", async () => {
     const mockSetUser = jest.fn();
+    const mockSetSignUpFormVisible = jest.fn();
     const user = { _id: 1, username: "bar" };
     fetch.mockResponseOnce(JSON.stringify(user));
-    render(<SignUpForm setUser={mockSetUser} />);
+    render(
+      <SignUpForm
+        setUser={mockSetUser}
+        setSignUpFormVisible={mockSetSignUpFormVisible}
+      />
+    );
     await userEvent.type(screen.getByPlaceholderText(/username/), "bar");
     await userEvent.type(screen.getByPlaceholderText(/password/), "password");
     await userEvent.type(
@@ -45,6 +59,7 @@ describe("SignUpForm", () => {
     await userEvent.click(screen.getByRole("button", { name: "submit" }));
     expect(fetch).toHaveBeenCalled();
     expect(mockSetUser).toHaveBeenCalledWith(user);
+    expect(mockSetSignUpFormVisible).toHaveBeenCalledWith(false);
   });
 
   it("back button sets the form visibility to false", async () => {

@@ -98,4 +98,22 @@ describe("SidePanel", () => {
     expect(screen.queryByText(/foo/)).toBeNull();
     expect(screen.getByText(/Login/)).toBeInTheDocument();
   });
+
+  it("passes peeps props", () => {
+    const peeps = [{ body: "peep1" }];
+    const setPeeps = jest.fn();
+    LoginForm.mockImplementation(({ setUser }) => {
+      useEffect(() => {
+        setUser({ username: "foo" });
+      }, [setUser]);
+    });
+    const result = [{ body: "peep2" }, ...peeps];
+    PeepForm.mockImplementation(({ peeps, setPeeps }) => {
+      useEffect(() => {
+        setPeeps(result);
+      });
+    });
+    render(<SidePanel peeps={peeps} setPeeps={setPeeps} />);
+    expect(setPeeps).toHaveBeenCalledWith(result);
+  });
 });

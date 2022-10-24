@@ -3,7 +3,7 @@ import LoginForm from "./loginForm";
 import PeepForm from "./peepForm";
 import SignUpForm from "./signUpForm";
 
-const SidePanel = () => {
+const SidePanel = ({ peeps, setPeeps }) => {
   const [user, setUser] = useState(null);
   const [signUpFormVisible, setSignUpFormVisible] = useState(false);
 
@@ -15,7 +15,15 @@ const SidePanel = () => {
           setUser={setUser}
         />
       );
-    if (user) return <PeepForm user={user} setUser={setUser} />;
+    if (user)
+      return (
+        <PeepForm
+          user={user}
+          setUser={setUser}
+          peeps={peeps}
+          setPeeps={setPeeps}
+        />
+      );
     return (
       <LoginForm
         setUser={setUser}

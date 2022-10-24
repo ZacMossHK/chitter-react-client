@@ -13,7 +13,9 @@ const SignUpForm = ({ setUser, setSignUpFormVisible }) => {
     const response = await fetch("");
     const result = await response.json();
     setUser(result);
+    setSignUpFormVisible(false);
   };
+
   return (
     <div>
       <h2>Sign up!</h2>

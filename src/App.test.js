@@ -46,7 +46,11 @@ describe("App", () => {
     await screen.findByPlaceholderText(/email/);
     await userEvent.type(screen.getByPlaceholderText(/username/), "foo");
     await userEvent.type(screen.getByPlaceholderText(/password/), "password");
-    await userEvent.type(screen.getByPlaceholderText(/email/), "foo");
+    await userEvent.type(
+      screen.getByPlaceholderText(/email/),
+      "email@email.com"
+    );
+    await userEvent.click(screen.getByText(/submit/));
     await screen.findByText(/@foo/);
     expect(screen.getByText(/@foo/)).toBeInTheDocument();
     expect(

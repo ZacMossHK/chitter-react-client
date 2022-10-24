@@ -1,6 +1,6 @@
 const { useState } = require("react");
 
-const LoginForm = ({ setUser }) => {
+const LoginForm = ({ setUser, setSignUpFormVisible }) => {
   const [usernameValue, setUsernameValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("");
 
@@ -11,6 +11,11 @@ const LoginForm = ({ setUser }) => {
     setUsernameValue("");
     setPasswordValue("");
   };
+
+  const handleSignUpButtonClick = () => {
+    setSignUpFormVisible(true);
+  };
+
   return (
     <div>
       <label htmlFor="username-login-input"></label>
@@ -32,7 +37,9 @@ const LoginForm = ({ setUser }) => {
       <button name="log-in" onClick={handleLogInButtonClick}>
         log in
       </button>
-      <button name="sign-up">sign up</button>
+      <button name="sign-up" onClick={handleSignUpButtonClick}>
+        sign up
+      </button>
     </div>
   );
 };
