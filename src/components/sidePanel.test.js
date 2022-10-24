@@ -44,7 +44,7 @@ describe("SidePanel", () => {
     expect(screen.getByText(/submit/)).toBeInTheDocument();
   });
 
-  it("renders the login form again once signUpFormVisible = false again", () => {
+  it("renders LoginForm again once signUpFormVisible = false again", () => {
     LoginForm.mockImplementationOnce(({ setSignUpFormVisible }) => {
       useEffect(() => {
         setSignUpFormVisible(true);
@@ -60,5 +60,25 @@ describe("SidePanel", () => {
     render(<SidePanel />);
     expect(screen.queryByText(/submit/)).toBeNull();
     expect(screen.getByText(/Login/)).toBeInTheDocument();
+  });
+
+  it("renders PeepForm if user signs up", () => {
+    LoginForm.mockImplementationOnce(({ setSignUpFormVisible }) => {
+      useEffect(() => {
+        setSignUpFormVisible(true);
+      }, [setSignUpFormVisible]);
+      return <p>Login</p>;
+    });
+    SignUpForm.mockImplementationOnce(({ setSignUpFormVisible, setUser }) => {
+      useEffect(() => {
+        setUser({ username: "foo" });
+        setSignUpFormVisible(false);
+      }, [setSignUpFormVisible, setUser]);
+      <p>submit</p>;
+    });
+    PeepForm.mockImplementationOnce(({ user }) => <p>{user.username}</p>);
+    render(<SidePanel />);
+    expect(screen.queryByText(/submit/)).toBeNull();
+    expect(screen.getByText(/foo/)).toBeInTheDocument();
   });
 });
