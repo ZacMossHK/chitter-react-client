@@ -3,8 +3,10 @@ import SidePanel from "./sidePanel";
 import LoginForm from "./loginForm";
 import PeepForm from "./peepForm";
 import { useEffect } from "react";
+import SignUpForm from "./signUpForm";
 jest.mock("./loginForm");
 jest.mock("./peepForm");
+jest.mock("./signUpForm");
 
 describe("SidePanel", () => {
   it("renders the default panel", () => {
@@ -27,5 +29,18 @@ describe("SidePanel", () => {
     render(<SidePanel />);
     expect(screen.queryByText(/Login/)).toBeNull();
     expect(screen.getByText(/foo/)).toBeInTheDocument();
+  });
+
+  it("renders SignUpForm if signUpFormVisible = true", () => {
+    LoginForm.mockImplementation(({ setSignUpFormVisible }) => {
+      useEffect(() => {
+        setSignUpFormVisible(true);
+      }, [setSignUpFormVisible]);
+      return <p>Login</p>;
+    });
+    SignUpForm.mockImplementation(() => <p>submit</p>);
+    render(<SidePanel />);
+    expect(screen.queryByText(/Login/)).toBeNull();
+    expect(screen.getByText(/submit/)).toBeInTheDocument();
   });
 });
