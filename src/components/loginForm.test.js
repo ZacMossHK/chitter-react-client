@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import LoginForm from "./loginForm";
 
-describe("SidePanel", () => {
+describe("LoginForm", () => {
   beforeEach(() => {});
 
   it("renders the login options", () => {
