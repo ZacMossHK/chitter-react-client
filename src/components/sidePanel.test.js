@@ -20,7 +20,7 @@ describe("SidePanel", () => {
     LoginForm.mockImplementation(({ setUser }) => {
       useEffect(() => {
         setUser({ _id: 1, username: "foo" });
-      }, []);
+      }, [setUser]);
 
       return <p>Login</p>;
     });
