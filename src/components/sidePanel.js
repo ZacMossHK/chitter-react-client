@@ -8,7 +8,8 @@ const SidePanel = () => {
   const [signUpFormVisible, setSignUpFormVisible] = useState(false);
 
   const renderPanel = () => {
-    if (signUpFormVisible) return <SignUpForm />;
+    if (signUpFormVisible)
+      return <SignUpForm setSignUpFormVisible={setSignUpFormVisible} />;
     if (user) return <PeepForm user={user} setUser={setUser} />;
     return (
       <LoginForm

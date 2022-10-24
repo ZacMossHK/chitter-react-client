@@ -43,4 +43,22 @@ describe("SidePanel", () => {
     expect(screen.queryByText(/Login/)).toBeNull();
     expect(screen.getByText(/submit/)).toBeInTheDocument();
   });
+
+  it("renders the login form again once signUpFormVisible = false again", () => {
+    LoginForm.mockImplementationOnce(({ setSignUpFormVisible }) => {
+      useEffect(() => {
+        setSignUpFormVisible(true);
+      }, [setSignUpFormVisible]);
+      return <p>Login</p>;
+    }).mockImplementationOnce(() => <p>Login</p>);
+    SignUpForm.mockImplementationOnce(({ setSignUpFormVisible }) => {
+      useEffect(() => {
+        setSignUpFormVisible(false);
+      }, [setSignUpFormVisible]);
+      <p>submit</p>;
+    });
+    render(<SidePanel />);
+    expect(screen.queryByText(/submit/)).toBeNull();
+    expect(screen.getByText(/Login/)).toBeInTheDocument();
+  });
 });
