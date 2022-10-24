@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import SignUpForm from "./signUpForm";
 import userEvent from "@testing-library/user-event";
 
