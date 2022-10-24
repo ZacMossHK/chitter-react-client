@@ -6,7 +6,7 @@ const SidePanel = () => {
   const [user, setUser] = useState(null);
 
   const renderPanel = () => {
-    if (user) return <PeepForm user={user} />;
+    if (user) return <PeepForm user={user} setUser={setUser} />;
     return <LoginForm setUser={setUser} />;
   };
   return (
