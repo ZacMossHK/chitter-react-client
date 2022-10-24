@@ -39,4 +39,12 @@ describe("PeepForm", () => {
       { body: "foobar" },
     ]);
   });
+
+  it("logs a user out", async () => {
+    const setUser = jest.fn();
+    fetch.mockResolvedValue({ status: 204 });
+    render(<PeepForm setUser={setUser} user={{ _id: 1, username: "foo" }} />);
+    await userEvent.click(screen.getByRole("button", { name: "log off" }));
+    expect(setUser).toHaveBeenCalledWith(null);
+  });
 });
