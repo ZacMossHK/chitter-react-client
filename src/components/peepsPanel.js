@@ -17,22 +17,20 @@ const PeepsPanel = ({ peeps, setPeeps }) => {
   };
 
   const renderPeeps = () => {
-    if (peeps.length) {
-      return (
-        <div>
-          {peeps.map((peep, idx) => {
-            return (
-              <div key={idx}>
-                <p>@{peep.username}</p>
-                <p>{peep.body}</p>
-                <p>Posted at {new Date(peep.createdAt).toString()}</p>
-                <p>♡ {peep.likes.length}</p>
-              </div>
-            );
-          })}
-        </div>
-      );
-    }
+    return (
+      <div>
+        {peeps.map((peep, idx) => {
+          return (
+            <div key={idx}>
+              <p>@{peep.username}</p>
+              <p>{peep.body}</p>
+              <p>Posted at {new Date(peep.createdAt).toString()}</p>
+              <p>♡ {peep.likes.length}</p>
+            </div>
+          );
+        })}
+      </div>
+    );
   };
 
   return (
