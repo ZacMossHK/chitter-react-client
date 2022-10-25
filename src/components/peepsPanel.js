@@ -3,6 +3,7 @@ import { useEffect } from "react";
 const PeepsPanel = ({ peeps, setPeeps }) => {
   useEffect(() => {
     fetchPeepsFromAPI();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleRefreshButtonClick = () => {
