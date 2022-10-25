@@ -59,7 +59,7 @@ describe("App", () => {
     ).toBeInTheDocument();
   });
 
-  it.only("posts a new peep", async () => {
+  it("posts a new peep", async () => {
     fetch
       .mockResponseOnce(JSON.stringify([]))
       .mockResponseOnce(JSON.stringify({ _id: 1, username: "foo" }))

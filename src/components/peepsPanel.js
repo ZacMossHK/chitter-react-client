@@ -2,11 +2,9 @@ import { useEffect } from "react";
 
 const PeepsPanel = ({ peeps, setPeeps }) => {
   useEffect(() => {
-    console.log("hello");
     fetch("")
       .then((response) => response.json())
       .then((result) => {
-        console.log(result);
         if (result.length) setPeeps(result);
       });
   }, []);
