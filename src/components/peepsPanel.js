@@ -7,6 +7,7 @@ const PeepsPanel = ({ peeps, setPeeps }) => {
       .then((result) => {
         if (result.length) setPeeps(result);
       });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const renderPeeps = () => {
