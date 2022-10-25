@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import App from "./App";
 import userEvent from "@testing-library/user-event";
+import { isElementOfType } from "react-dom/test-utils";
 
 describe("App", () => {
   beforeEach(() => {
@@ -56,5 +57,37 @@ describe("App", () => {
     expect(
       screen.getByText("What would you like to Peep?")
     ).toBeInTheDocument();
+  });
+
+  it.only("posts a new peep", async () => {
+    fetch
+      .mockResponseOnce(JSON.stringify([]))
+      .mockResponseOnce(JSON.stringify({ _id: 1, username: "foo" }))
+      .mockResponseOnce(
+        JSON.stringify({
+          body: "hello world",
+          _id: 1,
+          username: "foo",
+          createdAt: new Date(2022, 10, 24),
+          likes: [],
+        })
+      );
+    render(<App />);
+    await userEvent.type(screen.getByPlaceholderText(/username/), "foo");
+    await userEvent.type(screen.getByPlaceholderText(/password/), "password");
+    await userEvent.click(screen.getByRole("button", { name: "log in" }));
+    await userEvent.type(
+      screen.getByPlaceholderText(/Enter your peep here/),
+      "hello world"
+    );
+    await userEvent.click(screen.getByRole("button", { name: "peep!" }));
+    await screen.findByText(/hello world/);
+    expect(screen.getByText(/hello world/)).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        "Posted at Thu Nov 24 2022 00:00:00 GMT+0000 (Greenwich Mean Time)"
+      )
+    ).toBeInTheDocument();
+    expect(screen.getByText(/♡ 0/)).toBeInTheDocument();
   });
 });

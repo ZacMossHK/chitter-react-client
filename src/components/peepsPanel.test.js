@@ -6,16 +6,17 @@ describe("PeepsPanel", () => {
     fetch.resetMocks();
   });
   it("renders a peep", async () => {
-    const peep = [
+    const peeps = [
       {
         username: "foo",
         body: "first peep",
-        createdAt: new Date(2022, 10, 11),
+        createdAt: new Date(2022, 10, 11).toISOString(),
         likes: ["id1, id2"],
       },
     ];
-    fetch.mockResponseOnce(JSON.stringify(peep));
-    render(<PeepsPanel />);
+    const mockSetPeeps = jest.fn();
+    fetch.mockResponseOnce(JSON.stringify(peeps));
+    render(<PeepsPanel peeps={peeps} setPeeps={mockSetPeeps} />);
     const username = await screen.findByText(/@foo/);
     const body = await screen.findByText(/first peep/);
     const createdAt = await screen.findByText(
@@ -25,19 +26,21 @@ describe("PeepsPanel", () => {
     [(username, body, createdAt, likes)].forEach((key) =>
       expect(key).toBeInTheDocument()
     );
+    expect(mockSetPeeps).toHaveBeenLastCalledWith(peeps);
   });
 
   it("renders a different peep", async () => {
-    const peep = [
+    const peeps = [
       {
         username: "bar",
         body: "second peep",
-        createdAt: new Date(2022, 10, 23),
+        createdAt: new Date(2022, 10, 23).toISOString(),
         likes: ["id1", "id2"],
       },
     ];
-    fetch.mockResponseOnce(JSON.stringify(peep));
-    render(<PeepsPanel />);
+    fetch.mockResponseOnce(JSON.stringify(peeps));
+    const mockSetPeeps = jest.fn();
+    render(<PeepsPanel peeps={peeps} setPeeps={mockSetPeeps} />);
     const username = await screen.findByText(/@bar/);
     const body = await screen.findByText(/second peep/);
     const createdAt = await screen.findByText(
@@ -47,6 +50,7 @@ describe("PeepsPanel", () => {
     [(username, body, createdAt, likes)].forEach((key) =>
       expect(key).toBeInTheDocument()
     );
+    expect(mockSetPeeps).toHaveBeenLastCalledWith(peeps);
   });
 
   it("renders several peeps", async () => {
@@ -54,18 +58,19 @@ describe("PeepsPanel", () => {
       {
         username: "foo",
         body: "first peep",
-        createdAt: new Date(2022, 10, 23),
+        createdAt: new Date(2022, 10, 23).toISOString(),
         likes: ["id1, id2"],
       },
       {
         username: "bar",
         body: "second peep",
-        createdAt: new Date(2022, 10, 11),
+        createdAt: new Date(2022, 10, 11).toISOString(),
         likes: ["id1", "id2"],
       },
     ];
+    const mockSetPeeps = jest.fn();
     fetch.mockResponseOnce(JSON.stringify(peeps));
-    render(<PeepsPanel />);
+    render(<PeepsPanel peeps={peeps} setPeeps={mockSetPeeps} />);
     await screen.findByText(/foo/);
     expect(screen.getByText(/foo/)).toBeInTheDocument();
     expect(screen.getByText(/first peep/)).toBeInTheDocument();

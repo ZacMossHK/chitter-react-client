@@ -1,16 +1,12 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
-const PeepsPanel = () => {
-  const [peeps, setPeeps] = useState([]);
-  // const handleChange = (event) => {
-  //   if (event.target.id === "username-login-input") {
-  //     setPasswordValue(event.target.value);
-  //   }
-  // };
+const PeepsPanel = ({ peeps, setPeeps }) => {
   useEffect(() => {
+    console.log("hello");
     fetch("")
       .then((response) => response.json())
       .then((result) => {
+        console.log(result);
         if (result.length) setPeeps(result);
       });
   }, []);
