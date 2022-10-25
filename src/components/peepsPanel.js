@@ -2,14 +2,14 @@ import { useEffect } from "react";
 
 const PeepsPanel = ({ peeps, setPeeps }) => {
   useEffect(() => {
-    fetch("")
-      .then((response) => response.json())
-      .then((result) => {
-        if (result.length) setPeeps(result);
-      });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    fetchPeepsFromAPI();
   }, []);
+
   const handleRefreshButtonClick = () => {
+    fetchPeepsFromAPI();
+  };
+
+  const fetchPeepsFromAPI = () => {
     fetch("")
       .then((response) => response.json())
       .then((result) => {
