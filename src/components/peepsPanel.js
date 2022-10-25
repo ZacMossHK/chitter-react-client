@@ -10,12 +10,10 @@ const PeepsPanel = ({ peeps, setPeeps }) => {
     fetchPeepsFromAPI();
   };
 
-  const fetchPeepsFromAPI = () => {
-    fetch("")
-      .then((response) => response.json())
-      .then((result) => {
-        if (result.length) setPeeps(result);
-      });
+  const fetchPeepsFromAPI = async () => {
+    const response = await fetch("");
+    const result = await response.json();
+    setPeeps(result);
   };
 
   const renderPeeps = () => {
