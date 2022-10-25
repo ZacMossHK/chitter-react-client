@@ -9,6 +9,13 @@ const PeepsPanel = ({ peeps, setPeeps }) => {
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  const handleRefreshButtonClick = () => {
+    fetch("")
+      .then((response) => response.json())
+      .then((result) => {
+        if (result.length) setPeeps(result);
+      });
+  };
 
   const renderPeeps = () => {
     if (peeps.length) {
@@ -29,7 +36,12 @@ const PeepsPanel = ({ peeps, setPeeps }) => {
     }
   };
 
-  return <div>{renderPeeps()}</div>;
+  return (
+    <div>
+      <button onClick={handleRefreshButtonClick}>refresh feed</button>
+      {renderPeeps()}
+    </div>
+  );
 };
 
 export default PeepsPanel;

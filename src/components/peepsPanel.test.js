@@ -1,5 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import PeepsPanel from "./peepsPanel";
+import userEvent from "@testing-library/user-event";
 
 describe("PeepsPanel", () => {
   beforeEach(() => {
@@ -88,5 +89,38 @@ describe("PeepsPanel", () => {
       )
     ).toBeInTheDocument();
     expect(screen.getByText(/♡ 2/)).toBeInTheDocument();
+  });
+
+  it("refreshes the feed", async () => {
+    const peeps = [
+      {
+        username: "bar",
+        body: "second peep",
+        createdAt: new Date(2022, 10, 11).toISOString(),
+        likes: ["id1", "id2"],
+      },
+    ];
+    const newPeeps = [
+      {
+        username: "foo",
+        body: "first peep",
+        createdAt: new Date(2022, 10, 23).toISOString(),
+        likes: ["id1, id2"],
+      },
+      {
+        username: "bar",
+        body: "second peep",
+        createdAt: new Date(2022, 10, 11).toISOString(),
+        likes: ["id1", "id2"],
+      },
+    ];
+    const mockSetPeeps = jest.fn();
+    fetch
+      .mockResponseOnce(JSON.stringify(peeps))
+      .mockResponseOnce(JSON.stringify(newPeeps));
+    render(<PeepsPanel peeps={peeps} setPeeps={mockSetPeeps} />);
+    await userEvent.click(screen.getByRole("button", { name: "refresh feed" }));
+    expect(fetch).toHaveBeenCalledTimes(2);
+    expect(mockSetPeeps).toHaveBeenCalledTimes(2);
   });
 });
