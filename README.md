@@ -1,6 +1,6 @@
 # Chitter Front-end
 
-The back-end to Chitter, a social media web application.
+The back-end to **Chitter**, a social media web application.
 
 ***This is still in progress!***
 
