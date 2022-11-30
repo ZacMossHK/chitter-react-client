@@ -9,6 +9,7 @@ describe("PeepsPanel", () => {
   it("renders a peep", async () => {
     const peeps = [
       {
+        _id: 1,
         username: "foo",
         body: "first peep",
         createdAt: new Date(2022, 10, 11).toISOString(),
@@ -33,6 +34,7 @@ describe("PeepsPanel", () => {
   it("renders a different peep", async () => {
     const peeps = [
       {
+        _id: 1,
         username: "bar",
         body: "second peep",
         createdAt: new Date(2022, 10, 23).toISOString(),
@@ -57,12 +59,14 @@ describe("PeepsPanel", () => {
   it("renders several peeps", async () => {
     const peeps = [
       {
+        _id: 2,
         username: "foo",
         body: "first peep",
         createdAt: new Date(2022, 10, 23).toISOString(),
         likes: ["id1, id2"],
       },
       {
+        _id: 1,
         username: "bar",
         body: "second peep",
         createdAt: new Date(2022, 10, 11).toISOString(),
@@ -94,6 +98,7 @@ describe("PeepsPanel", () => {
   it("refreshes the feed", async () => {
     const peeps = [
       {
+        _id: 1,
         username: "bar",
         body: "second peep",
         createdAt: new Date(2022, 10, 11).toISOString(),
@@ -102,12 +107,14 @@ describe("PeepsPanel", () => {
     ];
     const newPeeps = [
       {
+        _id: 2,
         username: "foo",
         body: "first peep",
         createdAt: new Date(2022, 10, 23).toISOString(),
         likes: ["id1, id2"],
       },
       {
+        _id: 1,
         username: "bar",
         body: "second peep",
         createdAt: new Date(2022, 10, 11).toISOString(),
@@ -122,5 +129,23 @@ describe("PeepsPanel", () => {
     await userEvent.click(screen.getByRole("button", { name: "refresh feed" }));
     expect(fetch).toHaveBeenCalledTimes(2);
     expect(mockSetPeeps).toHaveBeenCalledTimes(2);
+  });
+
+  it("lets the user like a post", async () => {
+    const peeps = [
+      {
+        _id: 1,
+        username: "foo",
+        body: "second peep",
+        createdAt: new Date(2022, 10, 11).toISOString(),
+        likes: [],
+      },
+    ];
+    const mockSetPeeps = jest.fn();
+    fetch.mockResponseOnce(JSON.stringify(peeps));
+    render(<PeepsPanel peeps={peeps} setPeeps={mockSetPeeps} />);
+    await userEvent.click(screen.getByTestId("peeps-likes-1"));
+    await screen.findByText(/♥ 1/);
+    expect(screen.getByText(/♥ 1/)).toBeInTheDocument();
   });
 });
