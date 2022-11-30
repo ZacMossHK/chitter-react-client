@@ -3,6 +3,7 @@ const PeepForm = ({ user, setUser, peeps, setPeeps }) => {
     const response = await fetch("");
     if (response.status === 204) setUser(null);
   };
+
   const handlePeepButtonClick = async () => {
     const response = await fetch("");
     const result = await response.json();
