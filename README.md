@@ -1,70 +1,40 @@
-# Getting Started with Create React App
+# Chitter Client
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+**The front-end client to Chitter, a social media web application.**
 
-## Available Scripts
+***This is still in progress!***
 
-In the project directory, you can run:
+Users can create accounts, log in and out, make posts (called Peeps), like posts, and tag users in posts. Tagged users will be emailed at the address supplied when they create their account.
 
-### `npm start`
+[Chitter back-end Github.](https://github.com/ZacMossHK/chitter-react-api)
 
-Runs the app in the development mode.\
+## Tech
+
+Chitter's front-end uses the following tech stack:
+
+- Javascript
+- React
+- Jest & React Testing Library
+- Nodemon
+- HTML
+- CSS
+
+## Installation
+
+```npm i```
+
+To run all tests:
+
+```jest```
+
+To run the app in the development mode:
+
+```npm start```
+
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Design
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+For my initial designs I used Excalidraw to experiment and quickly sketch out thoughts for how pages should look. I settled on a two-panel layout that seperated user information and posting interactions from the Peeps timeline. I then finalised those designs in Figma.
+![chitterClientExcalidraw](https://user-images.githubusercontent.com/63399205/199800708-2d76da34-6ed6-4c0d-9494-b2791bbea24b.png)
+![chitterClientFigma](https://user-images.githubusercontent.com/63399205/199800947-5afaac7f-b4a0-49dd-a032-d37f41878b74.jpg)
