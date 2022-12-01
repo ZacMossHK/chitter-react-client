@@ -89,4 +89,29 @@ describe("App", () => {
     ).toBeInTheDocument();
     expect(screen.getByText(/♡ 0/)).toBeInTheDocument();
   });
+
+  it("likes a peep", async () => {
+    fetch
+      .mockResponseOnce(
+        JSON.stringify([
+          {
+            body: "hello world",
+            _id: 1,
+            username: "foo",
+            createdAt: new Date(2022, 10, 24),
+            likes: [],
+          },
+        ])
+      )
+      .mockResponseOnce(JSON.stringify({ _id: 1, username: "foo" }))
+      .mockResolvedValueOnce({ status: 201 });
+    render(<App />);
+    await userEvent.type(screen.getByPlaceholderText(/username/), "foo");
+    await userEvent.type(screen.getByPlaceholderText(/password/), "password");
+    await userEvent.click(screen.getByRole("button", { name: "log in" }));
+    await screen.findByText(/What would you like to Peep/);
+    await userEvent.click(screen.getByTestId("peeps-likes-1"));
+    await screen.findByText(/♥ 1/);
+    expect(screen.getByText(/♥ 1/)).toBeInTheDocument();
+  });
 });

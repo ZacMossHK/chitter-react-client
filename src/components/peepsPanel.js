@@ -21,7 +21,7 @@ const PeepsPanel = ({ peeps, setPeeps }) => {
     const response = await fetch("");
     if (response.status === 201) {
       await setHeart("♥");
-      setPeeps([
+      await setPeeps([
         {
           _id: 1,
           username: "foo",
