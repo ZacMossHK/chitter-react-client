@@ -131,7 +131,7 @@ describe("PeepsPanel", () => {
     expect(mockSetPeeps).toHaveBeenCalledTimes(2);
   });
 
-  it("lets the user like a post", async () => {
+  it("clicking the like button changes the heart icon", async () => {
     const peeps = [
       {
         _id: 1,
@@ -142,10 +142,11 @@ describe("PeepsPanel", () => {
       },
     ];
     const mockSetPeeps = jest.fn();
-    fetch.mockResponseOnce(JSON.stringify(peeps));
+    fetch
+      .mockResponseOnce(JSON.stringify(peeps))
+      .mockResolvedValueOnce({ status: 201 });
     render(<PeepsPanel peeps={peeps} setPeeps={mockSetPeeps} />);
     await userEvent.click(screen.getByTestId("peeps-likes-1"));
-    await screen.findByText(/♥ 1/);
-    expect(screen.getByText(/♥ 1/)).toBeInTheDocument();
+    expect(mockSetPeeps).toHaveBeenCalled();
   });
 });

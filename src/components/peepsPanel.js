@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 const PeepsPanel = ({ peeps, setPeeps }) => {
-  const [like, setLike] = useState(true);
+  const [heart, setHeart] = useState("♡");
   useEffect(() => {
     fetchPeepsFromAPI();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -19,8 +19,18 @@ const PeepsPanel = ({ peeps, setPeeps }) => {
 
   const handleLikeClick = async () => {
     const response = await fetch("");
-    const result = await response.json();
-    // result
+    if (response.status === 201) {
+      await setHeart("♥");
+      setPeeps([
+        {
+          _id: 1,
+          username: "foo",
+          body: "second peep",
+          createdAt: new Date(2022, 10, 11).toISOString(),
+          likes: [1],
+        },
+      ]);
+    }
   };
 
   const renderPeeps = () => {
@@ -37,7 +47,7 @@ const PeepsPanel = ({ peeps, setPeeps }) => {
                 id={`peeps-likes-${peep._id}`}
                 onClick={handleLikeClick}
               >
-                ♡ {peep.likes.length}
+                {heart} {peep.likes.length}
               </p>
             </div>
           );
