@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import Peep from "./peep";
 
 const PeepsPanel = ({ peeps, setPeeps }) => {
-  const [heart, setHeart] = useState("♡");
   useEffect(() => {
     fetchPeepsFromAPI();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -17,41 +17,12 @@ const PeepsPanel = ({ peeps, setPeeps }) => {
     setPeeps(result);
   };
 
-  const handleLikeClick = async () => {
-    const response = await fetch("");
-    if (response.status === 201) {
-      await setHeart("♥");
-      await setPeeps([
-        {
-          _id: 1,
-          username: "foo",
-          body: "second peep",
-          createdAt: new Date(2022, 10, 11).toISOString(),
-          likes: [1],
-        },
-      ]);
-    }
-  };
-
   const renderPeeps = () => {
     return (
       <div>
-        {peeps.map((peep) => {
-          return (
-            <div key={peep._id}>
-              <p>@{peep.username}</p>
-              <p>{peep.body}</p>
-              <p>Posted at {new Date(peep.createdAt).toString()}</p>
-              <p
-                data-testid={`peeps-likes-${peep._id}`}
-                id={`peeps-likes-${peep._id}`}
-                onClick={handleLikeClick}
-              >
-                {heart} {peep.likes.length}
-              </p>
-            </div>
-          );
-        })}
+        {peeps.map((peep, idx) => (
+          <Peep key={idx} peep={peep} setPeeps={setPeeps} />
+        ))}
       </div>
     );
   };
