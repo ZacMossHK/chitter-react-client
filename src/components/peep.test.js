@@ -1,5 +1,6 @@
 import Peep from "./peep";
 import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 
 describe("Peep", () => {
   it("renders a peep", async () => {
@@ -10,9 +11,7 @@ describe("Peep", () => {
       createdAt: new Date(2022, 10, 11).toISOString(),
       likes: ["id1, id2"],
     };
-    const mockSetPeeps = jest.fn();
-    fetch.mockResponseOnce(JSON.stringify(peep));
-    render(<Peep peep={peep} setPeeps={mockSetPeeps} />);
+    render(<Peep peep={peep} />);
     const username = await screen.findByText(/@foo/);
     const body = await screen.findByText(/first peep/);
     const createdAt = await screen.findByText(
@@ -22,5 +21,20 @@ describe("Peep", () => {
     [(username, body, createdAt, likes)].forEach((key) =>
       expect(key).toBeInTheDocument()
     );
+  });
+
+  it("clicking the like button changes the heart icon", async () => {
+    const peep = {
+      _id: 1,
+      username: "foo",
+      body: "second peep",
+      createdAt: new Date(2022, 10, 11).toISOString(),
+      likes: [],
+    };
+    fetch.mockResolvedValueOnce({ status: 201 });
+    render(<Peep peep={peep} />);
+    await userEvent.click(screen.getByTestId("peeps-likes-1"));
+    await screen.findByText(/♥ 1/);
+    expect(screen.getByText(/♥/)).toBeInTheDocument();
   });
 });

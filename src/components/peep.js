@@ -1,21 +1,14 @@
 import { useState } from "react";
 
-const Peep = ({ peep, setPeeps }) => {
+const Peep = ({ peep }) => {
   const [heart, setHeart] = useState("♡");
+  const [peepLikes, setPeepLikes] = useState(peep.likes.length);
 
   const handleLikeClick = async () => {
     const response = await fetch("");
     if (response.status === 201) {
       await setHeart("♥");
-      await setPeeps([
-        {
-          _id: 1,
-          username: "foo",
-          body: "second peep",
-          createdAt: new Date(2022, 10, 11).toISOString(),
-          likes: [1],
-        },
-      ]);
+      await setPeepLikes(peep.likes.length + 1);
     }
   };
   return (
@@ -28,7 +21,7 @@ const Peep = ({ peep, setPeeps }) => {
         id={`peeps-likes-${peep._id}`}
         onClick={handleLikeClick}
       >
-        {heart} {peep.likes.length}
+        {heart} {peepLikes}
       </p>
     </div>
   );
