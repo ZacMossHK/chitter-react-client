@@ -4,10 +4,16 @@ import PeepsPanel from "./components/peepsPanel";
 
 const App = () => {
   const [peeps, setPeeps] = useState([]);
+  const [user, setUser] = useState(null);
   return (
     <div>
-      <SidePanel peeps={peeps} setPeeps={setPeeps} />
-      <PeepsPanel peeps={peeps} setPeeps={setPeeps} />
+      <SidePanel
+        peeps={peeps}
+        setPeeps={setPeeps}
+        user={user}
+        setUser={setUser}
+      />
+      <PeepsPanel peeps={peeps} setPeeps={setPeeps} user={user} />
     </div>
   );
 };

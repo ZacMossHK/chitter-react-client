@@ -1,14 +1,21 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-const Peep = ({ peep }) => {
+const Peep = ({ peep, user }) => {
   const [heart, setHeart] = useState("♡");
   const [peepLikes, setPeepLikes] = useState(peep.likes.length);
 
+  useEffect(() => {
+    if (user && peep.likes.includes(user._id)) setHeart("♥");
+  }, []);
+
   const handleLikeClick = async () => {
     const response = await fetch("");
-    if (response.status === 201) {
+    if (heart === "♥") {
+      await setHeart("♡");
+      await setPeepLikes(peepLikes - 1);
+    } else if (response.status === 201) {
       await setHeart("♥");
-      await setPeepLikes(peep.likes.length + 1);
+      await setPeepLikes(peepLikes + 1);
     }
   };
   return (

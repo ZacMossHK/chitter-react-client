@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import Peep from "./peep";
 
-const PeepsPanel = ({ peeps, setPeeps }) => {
+const PeepsPanel = ({ peeps, setPeeps, user }) => {
   useEffect(() => {
     fetchPeepsFromAPI();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -21,7 +21,7 @@ const PeepsPanel = ({ peeps, setPeeps }) => {
     return (
       <div>
         {peeps.map((peep, idx) => (
-          <Peep key={idx} peep={peep} setPeeps={setPeeps} />
+          <Peep key={idx} peep={peep} user={user} />
         ))}
       </div>
     );
