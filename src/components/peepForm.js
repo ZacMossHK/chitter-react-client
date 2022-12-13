@@ -29,4 +29,4 @@ const PeepForm = ({ user, setUser, peeps, setPeeps }) => {
   );
 };
 
-module.exports = PeepForm;
+export default PeepForm;

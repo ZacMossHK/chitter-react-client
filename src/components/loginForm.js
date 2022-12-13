@@ -44,4 +44,4 @@ const LoginForm = ({ setUser, setSignUpFormVisible }) => {
   );
 };
 
-module.exports = LoginForm;
+export default LoginForm;

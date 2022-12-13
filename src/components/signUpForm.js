@@ -10,8 +10,21 @@ const SignUpForm = ({ setUser, setSignUpFormVisible }) => {
   };
 
   const handleSubmitButtonClick = async () => {
-    const response = await fetch("");
+    const response = await fetch(`${process.env.REACT_APP_URL}/users`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        user: {
+          username: usernameValue,
+          email: emailValue,
+          password: passwordValue,
+        },
+      }),
+    });
     const result = await response.json();
+    console.log(result);
     setUser(result);
     setSignUpFormVisible(false);
   };
@@ -22,20 +35,20 @@ const SignUpForm = ({ setUser, setSignUpFormVisible }) => {
       <input
         name="username"
         placeholder="username"
-        value={usernameValue}
-        onChange={setUsernameValue}
+        // value={usernameValue}
+        onChange={(event) => setUsernameValue(event.target.value)}
       ></input>
       <input
         name="password"
         placeholder="password"
-        value={passwordValue}
-        onChange={setPasswordValue}
+        // value={passwordValue}
+        onChange={(event) => setPasswordValue(event.target.value)}
       ></input>
       <input
         name="email"
         placeholder="email"
-        value={emailValue}
-        onChange={setEmailValue}
+        // value={emailValue}
+        onChange={(event) => setEmailValue(event.target.value)}
       ></input>
       <button name="submit" onClick={handleSubmitButtonClick}>
         submit
