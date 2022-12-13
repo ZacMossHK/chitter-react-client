@@ -3,8 +3,7 @@ import LoginForm from "./loginForm";
 import PeepForm from "./peepForm";
 import SignUpForm from "./signUpForm";
 
-const SidePanel = ({ peeps, setPeeps }) => {
-  const [user, setUser] = useState(null);
+const SidePanel = ({ peeps, setPeeps, user, setUser }) => {
   const [signUpFormVisible, setSignUpFormVisible] = useState(false);
 
   const renderPanel = () => {

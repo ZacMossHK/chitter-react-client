@@ -7,6 +7,29 @@ describe("App", () => {
     fetch.resetMocks();
   });
 
+  it("renders peeps", async () => {
+    fetch.mockResponseOnce(
+      JSON.stringify([
+        {
+          body: "hello world",
+          _id: 1,
+          username: "foo",
+          createdAt: new Date(2022, 10, 24),
+          likes: [],
+        },
+      ])
+    );
+    render(<App />);
+    await screen.findByText(/hello world/);
+    expect(screen.getByText(/hello world/)).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        "Posted at Thu Nov 24 2022 00:00:00 GMT+0000 (Greenwich Mean Time)"
+      )
+    ).toBeInTheDocument();
+    expect(screen.getByText(/♡ 0/)).toBeInTheDocument();
+  });
+
   it("logs in a user", async () => {
     fetch
       .mockResponseOnce(JSON.stringify([]))
@@ -111,6 +134,31 @@ describe("App", () => {
     await userEvent.click(screen.getByRole("button", { name: "log in" }));
     await screen.findByText(/What would you like to Peep/);
     await userEvent.click(screen.getByTestId("peeps-likes-1"));
+    await screen.findByText(/♥ 1/);
+    expect(screen.getByText(/♥ 1/)).toBeInTheDocument();
+  });
+
+  it("changes a unliked peep to a liked peep if the user logs in and has already liked that peep", async () => {
+    fetch
+      .mockResponseOnce(
+        JSON.stringify([
+          {
+            body: "hello world",
+            _id: 1,
+            username: "foo",
+            createdAt: new Date(2022, 10, 24),
+            likes: [1],
+          },
+        ])
+      )
+      .mockResponseOnce(JSON.stringify({ _id: 1, username: "foo" }));
+    render(<App />);
+    await screen.findByText(/♡ 1/);
+    expect(screen.getByText(/♡ 1/)).toBeInTheDocument();
+    await userEvent.type(screen.getByPlaceholderText(/username/), "foo");
+    await userEvent.type(screen.getByPlaceholderText(/password/), "password");
+    await userEvent.click(screen.getByRole("button", { name: "log in" }));
+    await screen.findByText(/What would you like to Peep/);
     await screen.findByText(/♥ 1/);
     expect(screen.getByText(/♥ 1/)).toBeInTheDocument();
   });

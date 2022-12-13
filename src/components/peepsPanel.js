@@ -4,7 +4,6 @@ import Peep from "./peep";
 const PeepsPanel = ({ peeps, setPeeps, user }) => {
   useEffect(() => {
     fetchPeepsFromAPI();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleRefreshButtonClick = () => {
@@ -14,7 +13,7 @@ const PeepsPanel = ({ peeps, setPeeps, user }) => {
   const fetchPeepsFromAPI = async () => {
     const response = await fetch("");
     const result = await response.json();
-    setPeeps(result);
+    await setPeeps(result);
   };
 
   const renderPeeps = () => {

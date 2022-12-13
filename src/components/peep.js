@@ -3,10 +3,9 @@ import { useState, useEffect } from "react";
 const Peep = ({ peep, user }) => {
   const [heart, setHeart] = useState("♡");
   const [peepLikes, setPeepLikes] = useState(peep.likes.length);
-
   useEffect(() => {
     if (user && peep.likes.includes(user._id)) setHeart("♥");
-  }, []);
+  }, [user]);
 
   const handleLikeClick = async () => {
     const response = await fetch("");
