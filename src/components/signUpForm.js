@@ -24,7 +24,6 @@ const SignUpForm = ({ setUser, setSignUpFormVisible }) => {
       }),
     });
     const result = await response.json();
-    console.log(result);
     setUser(result);
     setSignUpFormVisible(false);
   };
